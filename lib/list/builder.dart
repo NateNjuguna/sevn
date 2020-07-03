@@ -16,7 +16,7 @@ class SevnListBuilder<M> {
 
   SevnListItemConfig<M> addDisplay(M model) => buildListItemConfig(model);
 
-  SevnList buildList(List<M> models) => SevnList(
+  SevnListWidget buildList(List<M> models) => SevnListWidget(
         models.map<SevnListItemConfig<M>>(addDisplay).toList(),
         groupBy: 'createdAt',
       );
@@ -25,8 +25,7 @@ class SevnListBuilder<M> {
       SevnListItemConfig<M>.from(listItemConfigBuilder, model);
 
   Widget call(BuildContext context) => FutureBuilder<List<M>>(
-        builder:
-            (BuildContext context, AsyncSnapshot<List<M>> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List<M>> snapshot) {
           if (snapshot.hasData) {
             return buildList(snapshot.data);
           } else if (snapshot.hasError) {

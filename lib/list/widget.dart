@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'item/config.dart';
 
-class SevnList extends StatelessWidget {
+class SevnListWidget extends StatelessWidget {
   final Map<String, List<SevnListItemConfig>> _groupedLists =
       <String, List<SevnListItemConfig>>{};
   final List<SevnListItemConfig> list;
@@ -11,17 +11,15 @@ class SevnList extends StatelessWidget {
   final int limit;
   final bool reverse;
 
-  SevnList(this.list, {this.groupBy, this.limit, this.reverse = false})
+  SevnListWidget(this.list, {this.groupBy, this.limit, this.reverse = false})
       : _list = (reverse ? list.reversed : list)
             .take(limit == null || limit > list.length ? list.length : limit)
             .toList() {
     if (groupBy != null) {
       _list.forEach((SevnListItemConfig listItemConfig) {
         String groupKey = listItemConfig.group;
-        _groupedLists.update(
-            groupKey,
-            (List<SevnListItemConfig> current) =>
-                current..add(listItemConfig),
+        _groupedLists.update(groupKey,
+            (List<SevnListItemConfig> current) => current..add(listItemConfig),
             ifAbsent: () => <SevnListItemConfig>[listItemConfig]);
       });
     }
@@ -34,15 +32,14 @@ class SevnList extends StatelessWidget {
               ? _buildListItemsfromList(_list)
               : _groupedLists
                   .map<String, List<Widget>>(
-                      (String key, List<SevnListItemConfig> list) =>
-                          MapEntry(
+                      (String key, List<SevnListItemConfig> list) => MapEntry(
+                          key,
+                          <Widget>[
+                            Text(
                               key,
-                              <Widget>[
-                                Text(
-                                  key,
-                                  style: Theme.of(context).textTheme.subtitle2,
-                                )
-                              ]..addAll(_buildListItemsfromList(list))))
+                              style: Theme.of(context).textTheme.subtitle2,
+                            )
+                          ]..addAll(_buildListItemsfromList(list))))
                   .values
                   .expand((List<Widget> list) => list)
                   .toList(),
@@ -54,8 +51,7 @@ class SevnList extends StatelessWidget {
           ),
         );
 
-  List<_SevnListItem> _buildListItemsfromList(
-          List<SevnListItemConfig> list) =>
+  List<_SevnListItem> _buildListItemsfromList(List<SevnListItemConfig> list) =>
       list.map<_SevnListItem>(_buildListItem).toList();
 
   _SevnListItem _buildListItem(SevnListItemConfig listItemConfig) =>
