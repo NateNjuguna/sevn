@@ -1,8 +1,8 @@
-export 'service.dart';
-export 'provider.dart';
-
 import 'service.dart';
 import 'provider.dart';
+
+export 'injectable/state.dart';
+export 'injectable/widget.dart';
 
 mixin SevnInjectable {
   ///
