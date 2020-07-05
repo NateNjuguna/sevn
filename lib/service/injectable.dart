@@ -1,3 +1,6 @@
+export 'service.dart';
+export 'provider.dart';
+
 import 'service.dart';
 import 'provider.dart';
 
